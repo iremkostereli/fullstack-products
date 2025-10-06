@@ -8,7 +8,7 @@ let cached = { value: null, expiresAt: 0 };
 
 export async function getGoldPriceUSDPerGram() {
   try {
-    // Return cached value if still valid
+    // Defines cache duration in seconds. Currently set to 300 (5 minutes)
     const ttlSec = Number(process.env.GOLD_CACHE_TTL_SECONDS || 300);
     const now = Date.now();
     if (cached.value && now < cached.expiresAt) return cached.value;
@@ -16,11 +16,10 @@ export async function getGoldPriceUSDPerGram() {
     // Load provider settings from environment
     // Gold price fetched from MetalPriceAPI
     const base = (process.env.MPA_BASE);
-    const key  = process.env.MPA_API_KEY;
+    const key = process.env.MPA_API_KEY || process.env.MPA_API_KEY_FALLBACK;
     
     if (!key) {
-      console.warn("MPA_API_KEY missing. Using fallback price (75 USD/gram).");
-      return 75; // fallback only for development/test
+      throw new Error("Missing API key for external service");
     }
 
     // Request current USD→XAU rate
@@ -49,6 +48,6 @@ export async function getGoldPriceUSDPerGram() {
     return usdPerGram;
   } catch (err) {
     console.error("Gold price API error:", err.message);
-    return 75;
+    throw err;
   }
 }
