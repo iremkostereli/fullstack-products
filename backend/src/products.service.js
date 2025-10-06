@@ -1,3 +1,4 @@
+// src/products.service.js
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -40,7 +41,6 @@ export async function getProducts(filters = {}) {
   let result = mapped;
   if (minPrice !== undefined) result = result.filter(p => p.priceUSD >= minPrice);
   if (maxPrice !== undefined) result = result.filter(p => p.priceUSD <= maxPrice);
-  if (minPopularity !== undefined) result = result.filter(p => p.popularityOutOf5 >= minPopularity);
 
     if (filters.sort) {
     if (filters.sort === "priceAsc") {
