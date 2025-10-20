@@ -1,5 +1,6 @@
-# Fullstack Products — Case Study
+# Product Listing & Live Gold Pricing
 
+[🌐 View Live Project](https://fullstack-products.vercel.app)
 ---
 
 ## Overview
@@ -31,4 +32,5 @@ The backend fetches live gold price data (MetalPriceAPI) to compute product pric
 **İrem Köstereli**
 
 ---
+
 
